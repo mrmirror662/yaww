@@ -1,0 +1,53 @@
+//set targetspeed to 0.
+wait 5.
+print "anytime".
+wait until ship:verticalspeed < 0.
+wait 2.
+toggle sas.
+set h to alt:radar.
+set e to constant:e.
+brakes on.
+until alt:radar < 2{
+
+
+if alt:radar - 25 > 15 {
+set k to -15.
+}
+else {
+set k to -3.
+}
+if ship:status = "landed "{
+break.
+}
+
+
+set targetspeed  to -((alt:radar/14)).
+set targetspeed to targetspeed +k.
+set error to (targetspeed - (ship:verticalspeed))  .
+set error to error*6.
+if error > 100 {
+set error to 15.
+}
+
+
+set error to (e^error)/(1+(e^error)).
+print error.
+set throttle to error.
+//set error to 0.
+if ship:verticalspeed > -5 {
+
+lock steering to up.
+}else{
+lock steering to srfretrograde.
+}
+if (alt:radar - 25) < 100 {
+set x to 0.
+if x = 0 {
+gear on.
+}
+set x to x+1.
+}
+
+}
+set throttle to 0.
+unlock all.
